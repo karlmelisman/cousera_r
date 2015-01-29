@@ -37,6 +37,10 @@ best <- function(state, outcome) {
   dataOfState[,17]<- suppressWarnings(as.numeric (dataOfState[,17]))
   dataOfState[,23]<- suppressWarnings(as.numeric (dataOfState[,23]))
   
+  # sorting dataOfState in case, several hospitals have the same value
+  dataOfState <- dataOfState[order(dataOfState$Hospital.Name),] 
+  
+  ## Return hospital name in that state with lowest 30-day death rate
   if ( outcome == "heart attack" ) {
     return(dataOfState$Hospital.Name[which.min(dataOfState$Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack)])
   }
@@ -46,7 +50,5 @@ best <- function(state, outcome) {
   if ( outcome == "pneumonia" ) {
     return(dataOfState$Hospital.Name[which.min(dataOfState$Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia)])
   }
-  
-  ## Return hospital name in that state with lowest 30-day death rate
-  result
+
 }
